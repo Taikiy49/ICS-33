@@ -1,3 +1,5 @@
+"""NOTE CLASSES AND OBJECTS NOTE"""
+
 def try_kwargs(**kwargs):  # puts it in a dictionary
     for key, value in kwargs.items():
         return key, value

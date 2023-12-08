@@ -1,4 +1,6 @@
-# print('How', 'is', 'Boo', 'today', sep='_')
+"""NOTE FUNCTIONS AND THEIR PARAMETERS NOTE"""
+
+#  print('How', 'is', 'Boo', 'today', sep='_')
 
 def subtract(m, n):
     return m - n
@@ -77,6 +79,42 @@ def maximum(first, *rest):
     return largest
 
 # print(maximum(5, 3))
-print(maximum([3, 9, 5, 6]))
+# print(maximum([3, 9, 5, 6]))
 
-print("Test if git updates on macbook as well!")
+"""Positional and keyword parameters"""
+# use * to make everything to the right of it keyword arguments only
+# use / to make everything to the left of it positional arguments only
+
+def test_keyword(a, b, *, c, d):
+    return a, b, c, d
+
+test_keyword(1, 2, c=3, d=5) # remember, for keyword arguments, the name of the variables
+                             # must also be the same...
+
+def test_positional(a, b, /, c, d):
+    return a, b, c, d
+
+test_positional(1, 2, 3, 4)
+test_positional(1, 2, c=3, d=5)
+
+"""Now thing of a way where it would be useful to have both positional and keyword restrictions..."""
+def subtract(a, b, c, /, *, d=0): #  NOTE / must go before *...
+    return d - (a + b + c)
+
+subtract(1, 2, 3)
+subtract(1, 2, 3, d=8)
+"""NOW THATS PRETTY COOL!"""
+
+# try make something else again! Try implement everything you've learned in week 1!!
+def everything(a, b, /, *, c, **kwargs): 
+    for i in range(b-a):
+        for key, value in kwargs.items():
+            print(key, value)
+    print(c)
+
+everything(1, 2, a=3, b=5, c=6, this='is cool')
+
+"""NOTE CONTEXT MANAGERS NOTE"""
+
+
+
