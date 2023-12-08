@@ -78,3 +78,5 @@ def maximum(first, *rest):
 
 # print(maximum(5, 3))
 print(maximum([3, 9, 5, 6]))
+
+print("Hello world")
