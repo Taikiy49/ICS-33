@@ -1,0 +1,7 @@
+LET X 3
+LET X Y
+PRINT X
+LET Y 5
+LET X Y
+PRINT X
+.

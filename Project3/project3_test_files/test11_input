@@ -1,0 +1,5 @@
+GOSUB "boo"
+LET B 4
+boo: LET A 2
+RETURN
+.

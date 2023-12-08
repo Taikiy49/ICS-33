@@ -1,0 +1,102 @@
+{
+Sentence
+5 Hello [Something]
+3 Your favorite objects are [Object] and [Object] and [Object]
+7 I love [Name]
+1 Things to not do in your first date is [PleaseDontDoThis]
+}
+
+Ahahahahahaaaahahahaha
+
+{
+Something
+5 [Name]
+3 World
+2 Object
+}
+
+
+{
+Name
+10 [FirstName] [LastName]
+1 you! <3
+}
+
+
+{
+FirstName
+1 Alex
+1 Murakami
+1 Haruki
+1 William
+1 John
+1 Anya
+1 Boochi
+1 Aatrox
+1 Victor
+1 Viego
+1 Graves
+1 Ekko
+1 Hitori
+1 Nijika
+}
+
+{
+LastName
+3
+1 Goto
+1 Forger
+1 Santiarul Molach vol Kalah Heigaar
+1 Irelia
+1 Thorton
+1 Murakami
+1 Sharkspeare
+1 Shakespeare
+1 Cena
+1 Ijichi
+}
+
+{
+Object
+5 [RegularObject]
+1 [NSFW]
+}
+
+{
+RegularObject
+1 textbook
+1 laptop
+1 watch
+1 monitor
+1 tower
+1 lego
+1 mic
+1 door hinge
+1 lamp
+1 note
+1 steak
+1 apple
+1 orange
+1 rainbow
+1 sky
+1 sun
+1 mon
+1 earth
+1 charger
+1 You
+}
+
+{
+NSFW
+3 CENSORED
+1 CENSORED BY MIGHTY DISCORD MODERATOR
+1 CENSORED BY CHAT GPT
+1 CENSORED BY FBI
+1 CENSORED BY PROFESSOR HIMSELF
+}
+
+{
+PleaseDontDoThis
+10 I don't fking know go ask someone with more experience
+1 not showering, maybe
+}

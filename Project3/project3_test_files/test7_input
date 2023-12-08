@@ -1,0 +1,3 @@
+GOSUB "START"
+PRINT "HI"
+.

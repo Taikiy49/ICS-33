@@ -1,0 +1,108 @@
+>>> TEST 1 <<<
+{
+HowIsBoo
+1 Boo is [Adjective] today!
+0 Boo is not [Adjective] today...
+}
+
+{
+Adjective
+1 excited
+}
+
+>>> TEST 2 <<<
+
+{
+HowIsBoo2
+1 Boo is feeling [OhNo] today :(
+}
+
+{
+OhNo
+1 [Adjective2] sick
+}
+
+{
+Adjective2
+1 very
+}
+
+>>> TEST 3 <<<
+{
+HowIsBoo3
+1 [Nest1]
+}
+{
+Nest1
+1 [Nest2]
+}
+{
+Nest2
+1 [Nest3]
+}
+{
+Nest3
+1 This should print!
+}
+
+>>> TEST 4 <<<
+{
+HowIsBoo4
+1 [AdjectiveDoesNotExist]
+}
+
+{
+How Is Boo 4
+1 THIS SHOULD NOT PRINT
+}
+
+
+{
+HowIsBoo4-
+1 THIS SHOULD NOT PRINT
+}
+
+
+>>> TEST 5 <<<
+
+{
+HowIsBoo5
+ERROR THIS SHOULD NOT PRINT
+1 THIS SHOULD STILL NOT PRINT
+}
+
+>>> TEST 6 <<<
+
+{
+HowIsBoo6
+1 [Bad Adjective]
+1 Bad Adjective
+1 Testing [BadAdjective]
+}
+
+{
+BadAdjective
+1 THIS SHOULD NOT PRINT
+}
+
+>>> TEST 7 <<<
+
+{
+HowIsBoo7
+1 Hello [BlankSpace] World!
+}
+
+{
+BlankSpace
+1
+}
+
+{
+HowIsBoo8
+1 Boo is [Adjective_Invalid_Characters]
+}
+
+{
+Adjective_Invalid_Characters
+1 THIS SHOULD NOT PRINT
+}
