@@ -186,13 +186,13 @@ class MyContextManager:
 
 # print(MyContextManager('taiki', 10)) <- THIS IS INVALID BECAUSE FOR AN ENTER METHOD TO RUN,
 # IT HAS TO BE IN A WITH STATEMENT SO...
-try:
-    with MyContextManager('taiki', 15) as manager:
-        print('We are now inside the block!')
-        if manager._age < 19:
-            raise ValueError()
-except ValueError:
-    pass
+# try:
+#     with MyContextManager('taiki', 15) as manager:
+#         print('We are now inside the block!')
+#         if manager._age < 19:
+#             raise ValueError()
+# except ValueError:
+#     pass
 
 """So what I have is a context manager that takes the name and age.
     What I can do with a context manager is to first set valid class arguments.
@@ -203,6 +203,29 @@ except ValueError:
     than 19, it will have raised a ValueError and the context manager would have printed what it
     needs to print in the exit method.
 """
+
+class AnotherContextManager:
+    def __init__(self, value):
+        print("Initializing...")
+        self._value = value
+    def __enter__(self):
+        print("Entering...")
+        return self
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        if not exc_type:
+            print('Exiting peacefully...')
+        else:
+            print('Exiting violently!!!')
+
+with AnotherContextManager('abc') as manager:
+    if type(manager._value) is int:
+        print(manager._value)
+    else:
+        print("Error caused. Will be exiting soon!")
+        raise ValueError
+
+
+    
 
 
 
