@@ -278,25 +278,76 @@ def run_int_sequence_again():
     # first number 5, which is not what we want. We want to know everything that happens after 5 till the end!
 
 
-"""But what if we have something like this?..."""
+"""What if we yield integers? And what if we have return inside generators?"""
+def return_in_generator():
+    yield 1 
+    return 3
+    yield 5
 
+def test_return_in_generator():
+    i = return_in_generator() # <- this is unnecessary because generators are already 
+                            # basically have iter() implemented
+    print(next(i))
+    print(next(i)) 
+    # output: 1, StopIteration
 
+# a return stops the iteration once it is reached...
 
+# What if we raise an exception inside?
+def generator_with_exception():
+    yield 1
+    yield 2
+    raise ValueError('Hello')
+    yield 3
 
+# output: 1, 2, ValueError
 
+"""Lets create that int sequence again and make it iterable!"""
 
+class IntSequence:
+    def __init__(self, start, end):
+        self._start = start
+        self._end = end
+        self._current = start
 
+    def __iter__(self):
+        return self
 
+    def __next__(self):
+        if self._current >= self._end:
+            raise StopIteration
+        else:
+            result = self._current
+            self._current += 1
+            return result
 
+def run_int_sequence_class():
+    int_sequence = IntSequence(1, 10)
+    i = iter(int_sequence)
+    for _ in range(5):
+        print(next(i))
 
+# Lets use generators for files!
+def read_lines_from_file(file_path):
+    with open(file_path, 'r') as in_file:
+        for line in in_file:
+            yield line
 
+i = read_lines_from_file('../ICS-33/Final Review/taiki.txt')
+# now we have a generator with each line of the file. we can use next() to access the next line.
 
+"""we can do something cool like this..."""
+def read_all_integers():
+    while True:
+        inp = input("Please enter a digit: ")
+        if not inp.isdigit():
+            break
+        yield int(inp)
+ 
+# values = list(read_all_integers())
+# input: 1, 2, 3 | output: [1, 2, 3] NOW that's pretty useful!
 
-
-
-
-
-
-
-
+# this would print out every input as long as they are digits!
+for value in read_all_integers():
+    print(value)
 
