@@ -9,7 +9,7 @@ def unchanged(func): # make sure if you want to use something as a decorator it 
 def square(n):
     return n * n
 
-def with_greeting(func):
+def with_greeting(func): # this is a nested dict with it being a decorator
     def greet_and_execute(n):
         print("Boo!")
         return func(n)
@@ -21,8 +21,8 @@ def with_greeting2(func):
         return func(n)
     return greet_and_execute
 
-@with_greeting2
 @with_greeting
+@with_greeting2
 def square(n):
     return n * n
 
@@ -269,8 +269,8 @@ def fast_fibonacci(n):
 (fast_fibonacci(300))  # without caching, it won't even output anything because it takes too many recursive steps...
 
 # there are also a couple more functools...
-@lru_cache # last recently used cache, whatever that means lol
-@functools.total_ordering # used when decorating classes that contain __eq__ and __lt__ methods...
+# @lru_cache # last recently used cache, whatever that means lol
+# @functools.total_ordering # used when decorating classes that contain __eq__ and __lt__ methods...
                           # it implements the remaining methods according to the pattern similar to the one
                           # described below so that we don't have to...
 class Thing:
@@ -284,4 +284,153 @@ __le__ could use __eq__ and __lt__ and combine their results
 __gt__ could return the negation of what our automatically-generated __le__ return 
 
 """
+
+"""NOTE Class Design NOTE"""
+from datetime import date
+# lets look at something like this...
+# say we have a class date...
+d = date(2005, 11, 1)
+(d.year) # this is obviously legal. just calling the year attribute from the class date.
+# but let's take a look at this...
+# d.year = 2018 # what if we tried to change the date? What happens in this case?
+"""certainly, from we have learned so far, this is such a weird syntax, and since we haven't
+   implemented anything to support it, it gives me a traceback error telling me that
+   the object is not writable.
+"""
+# BUT is there a way to surpass this error? yes there is...
+class Thing:
+    def __getattr__(self, name):
+        return name[::-1]
+t = Thing()
+t.abc = 'Boo'
+t.bcd = 'Taiki'
+(t.abc) # Boo
+(t.bcd) # Taiki
+# nice we successfully implemeted the __getattr__ method!
+# remember the __getattr__ method is only called if the attribute does not already exist.
+
+"""wait lets test __getattr__ a bit more..."""
+class ThingOne:
+    def __init__(self, _name, _age):
+        self._name = _name
+        self._age = _age
+    def __getattr__(self, name):
+        return name
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+    def __delattr__(self, name):
+        super().__delattr__(name)
+
+        
+
+t = ThingOne('taiki', 19)
+(t._name) # attribute exists in the class, so __getattr__ is not called...
+(t._does_not_exist) # attribute does not exist in the attribute, so __getattr__ is called...
+del t._name
+(t._name) # now that we deleted t._name, it will just return name.
+
+
+"""INTRODUCING @property"""
+# @property transforms a no-argumnet method into a property where its value is determined by calling
+# the methods behind the scenes. 
+
+class Thing:
+    @property
+    def name(self):
+        return 'Boo!'
+    def __getattr__(self, name):
+        return name
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+    
+
+t = Thing()
+(t.name) # output: Boo!
+# t.name = 'Alex' # cannot do this with @property...
+
+
+"""INTRODUCING @dataclass"""
+from dataclasses import dataclass
+
+@dataclass
+class Thing:
+    a: int
+    b: int
+
+t = Thing(11, 1)
+(t.a, t.b) # output: 11, 1 
+# WOW that's very useful!
+
+# objects of data classes can also be compared for equality!
+
+"""Let's use @property and @dataclass together!"""
+@dataclass
+class Thing2:
+    name: str
+    age: int
+    @property
+    def level(self):
+        return 25
+
+t = Thing2('taiki', 19)
+(t.name, t.age, t.level) # taiki, 19, 25
+ 
+"""Nice! Now let's implement everything you've learned in this lesson!"""
+class Thing3:
+    def __init__(self, value):
+        self._value = value
+    def __getattr__(self, name):
+        return name
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+    def __delattr__(self, name):
+        super().__delattr__(name)
+
+# cls is used for descriptors!
+class ClassMethodDescriptor:
+    def __init__(self, func):
+        self._func = func
+    def __set_name__(self, cls, name):
+        self._cls = cls
+    def execute(self, *args, **kwargs):
+        return self._func(self._cls, *args, **kwargs)
+    def __get__(self):
+        return self.execute
+
+def class_method(func):
+    return ClassMethodDescriptor(func)
+
+# descriptors are used for decorators! notice that they also have func in their init method...
+# __post_init__ is used for @dataclass to catch errors 
+
+"""Finally, we come across one more problem..."""
+class Thing:
+    def __init__(self, value):
+        self._value = value
+    @property
+    def value(self):
+        return self._value
+
+t = Thing(5)
+(t.value)
+t.value = 15
+(t.value) # now this is illegal because it doesn't have a setter...
+# but the problem is how do we create a setter for something with @property?
+# INTRODUCING @value.setter
+
+class Thing:
+    def __init__(self, value):
+        self._value = value
+    @property
+    def value(self):
+        return self._value
+    @value.setter # this will allow us to set a value now!
+    def value(self, new_value): 
+        self._value = new_value
+
+# t = Thing(5)
+# print(t.value)
+# t.value = 15
+# print(t.value)
+
 
