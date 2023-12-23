@@ -1,0 +1,35 @@
+def ecoh(items):
+    if items:
+        while len(items) > 0:
+            yield from items
+            items = items[1:]
+        return
+    else:
+        return
+
+
+# review... how can we create iterators?
+
+class Iterator:
+    def __init__(self, value):
+        self._value = value
+    def __iter__(self):
+        return self
+    def __next__(self):
+        self._value += 1 
+        return self._value
+    def __eq__(self, other): # let's also make it comparable!
+        if type(other) is Iterator:
+            return self._value == other._value
+        else:
+            raise TypeError("Objects have different types")
+    def __lt__(self, other):
+        return self._value < other._value
+    def __le__(self, other):
+        return self._value <= other._value
+    def __getitem__(self, index):
+        return index
+    def __str__(self):
+        return "Iterator string returned"
+    def __repr__(self):
+        return f'Iterator({self._value})'
